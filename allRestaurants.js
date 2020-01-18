@@ -15,40 +15,36 @@ function populateRestaurant() {
     // console.log("ran stuff");
             $.ajax(settings).done(function (response) {
             console.log(response);
-            // var response2 = JSON.parse(response);
-            let branches = response[0]['restaurant_branches'];
-            // console.log(branches);
-            // console.log("test");
-            // console.log(branches[1]);
-            // console.log("test2");
-            // console.log(branches[1]['branch_name']);
-            // console.log(branches[2]['branch_name']);
-            let index = 0;
+            let branches = response;
             let currentBranch;
             let template;
             let tbody;
             let clone;
-            let td;
-            for (let branch in branches) {
-                // console.log(currentBranch);
-                // console.log(branches[1]);
-                // console.log(branch);
-                currentBranch = branches[branch]['branch_name'];
-                // console.log(currentBranch);
-                // Instantiate the table with the existing HTML tbody
-                // and the row with the template
-                template = document.querySelector('#restaurants');
+            let tgt;
+            for(let index = 0; index < branches.length; index++)
+            {
+                let list_entry = branches[index];
+                // console.log(list_entry);
+                for (let branch in list_entry["restaurant_branches"]) {
+                    // console.log(currentBranch);
+                    // console.log(branches[1]);
+                    // console.log(branch);
+                    currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
+                    // console.log(currentBranch);
+                    // Instantiate the table with the existing HTML tbody
+                    // and the row with the template
+                    template = document.querySelector('#restaurants');
 
-                // Clone the new row and insert it into the table
-                // tbody = document.querySelector("tbody");
-                clone = template.content.cloneNode(true);
-                tbody = clone.querySelector("div.text-here");
-                tbody.textContent = currentBranch;
-                // console.log(clone);
+                    // Clone the new row and insert it into the table
+                    // tbody = document.querySelector("tbody");
+                    clone = template.content.cloneNode(true);
+                    tbody = clone.querySelector("div.text-here");
+                    tbody.textContent = currentBranch;
+                    // console.log(clone);
 
-                tgt = document.querySelector("#contains-restaurants");
-                tgt.appendChild(clone);
-                index++;
+                    tgt = document.querySelector("#contains-restaurants");
+                    tgt.appendChild(clone);
+                }
             }
         });
 
