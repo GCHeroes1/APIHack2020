@@ -12,20 +12,19 @@ var settings = {
 };
 
 function populateRestaurant() {
-
-    console.log("ran stuff");
+    // console.log("ran stuff");
             $.ajax(settings).done(function (response) {
             console.log(response);
             // var response2 = JSON.parse(response);
             let branches = response[0]['restaurant_branches'];
-            console.log(branches);
-            console.log("test");
-            console.log(branches[1]);
-            console.log("test2");
-            console.log(branches[1]['branch_name']);
-            console.log(branches[2]['branch_name']);
+            // console.log(branches);
+            // console.log("test");
+            // console.log(branches[1]);
+            // console.log("test2");
+            // console.log(branches[1]['branch_name']);
+            // console.log(branches[2]['branch_name']);
             let index = 0;
-            let currentBranch = "test";
+            let currentBranch;
             let template;
             let tbody;
             let clone;
@@ -33,20 +32,22 @@ function populateRestaurant() {
             for (let branch in branches) {
                 // console.log(currentBranch);
                 // console.log(branches[1]);
-                console.log(branch);
+                // console.log(branch);
                 currentBranch = branches[branch]['branch_name'];
-                console.log(currentBranch);
+                // console.log(currentBranch);
                 // Instantiate the table with the existing HTML tbody
                 // and the row with the template
-                template = document.querySelector('#productrow');
+                template = document.querySelector('#restaurants');
 
                 // Clone the new row and insert it into the table
-                tbody = document.querySelector("tbody");
+                // tbody = document.querySelector("tbody");
                 clone = template.content.cloneNode(true);
-                td = clone.querySelectorAll("td");
-                td[index].textContent = currentBranch;
+                tbody = clone.querySelector("div.text-here");
+                tbody.textContent = currentBranch;
+                // console.log(clone);
 
-                tbody.appendChild(clone);
+                tgt = document.querySelector("#contains-restaurants");
+                tgt.appendChild(clone);
                 index++;
             }
         });
@@ -70,6 +71,5 @@ function populateRestaurant() {
         // td[1].textContent = "Acme Kidney Beans 2";
         //
         // tbody.appendChild(clone2);
-
 }
 
