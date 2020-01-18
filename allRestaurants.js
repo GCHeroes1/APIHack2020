@@ -25,12 +25,13 @@ function populateRestaurant() {
             {
                 let list_entry = branches[index];
                 // console.log(list_entry);
-                for (let branch in list_entry["restaurant_branches"]) {
-                    // console.log(currentBranch);
-                    // console.log(branches[1]);
-                    // console.log(branch);
-                    currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
-                    // console.log(currentBranch);
+                // for (let branch in list_entry){
+                    currentBranch = list_entry["restaurant_org"];
+                // for (let branch in list_entry["restaurant_branches"]) {
+
+                    //works for each branch name
+                    // currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
+
                     // Instantiate the table with the existing HTML tbody
                     // and the row with the template
                     template = document.querySelector('#restaurants');
@@ -44,28 +45,9 @@ function populateRestaurant() {
 
                     tgt = document.querySelector("#contains-restaurants");
                     tgt.appendChild(clone);
-                }
+                // }
             }
         });
 
-        // // Instantiate the table with the existing HTML tbody
-        // // and the row with the template
-        // var template = document.querySelector('#productrow');
-        //
-        // // Clone the new row and insert it into the table
-        // var tbody = document.querySelector("tbody");
-        // var clone = template.content.cloneNode(true);
-        // var td = clone.querySelectorAll("td");
-        // td[0].textContent = "1235646565";
-        //
-        // tbody.appendChild(clone);
-        //
-        // // Clone the new row and insert it into the table
-        // var clone2 = template.content.cloneNode(true);
-        // td = clone2.querySelectorAll("td");
-        // td[0].textContent = "0384928528";
-        // td[1].textContent = "Acme Kidney Beans 2";
-        //
-        // tbody.appendChild(clone2);
 }
 
