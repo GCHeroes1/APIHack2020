@@ -93,6 +93,8 @@ function searchAll(){
 }
 
 var cord = document.getElementById("Location");
+var d = new Date();
+var time = "<br>Time: "+ d.getHours() + ":" + d.getMinutes();
 var UserLat = 0;
 var UserLong = 0;
 function getLocation() {
@@ -101,7 +103,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
         //console.log("Geolocation is not supported by this browser.");
-        cord.innerHTML = "Geolocation is not supported by this browser.";
+        cord.innerHTML = "Geolocation is not supported by this browser." + time;
     }
 }
 
@@ -111,23 +113,23 @@ function showPosition(position) {
     //console.log("Latitude: " + UserLat +
      //   "\nLongitude: " + UserLong);
     cord.innerHTML = "Latitude: " + UserLat +
-        "<br>Longitude: " + UserLong;
+        "<br>Longitude: " + UserLong + time;
 
 }
 
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            cord.innerHTML = "User denied the request for Geolocation.";
+            cord.innerHTML = "User denied the request for Geolocation." + time;
             break;
         case error.POSITION_UNAVAILABLE:
-            cord.innerHTML = "Location information is unavailable.";
+            cord.innerHTML = "Location information is unavailable." + time;
             break;
         case error.TIMEOUT:
-            cord.innerHTML = "The request to get user location timed out.";
+            cord.innerHTML = "The request to get user location timed out." + time;
             break;
         default:
-            cord.innerHTML = "An unknown error occurred.";
+            cord.innerHTML = "An unknown error occurred." + "<br>Time: "+ time;
             break;
     }
 }
