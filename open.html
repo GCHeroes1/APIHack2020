@@ -156,7 +156,7 @@
                 <!-- Topbar Search -->
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border-0 small" id="openInput" onkeyup="searchOpen()" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
@@ -336,26 +336,26 @@
                     <h1 class="h3 mb-0 text-gray-800">Open restaurants</h1>
                 </div>
 
-                <div class="row">
+<!--                <div class="row">-->
 
-                    <template id="restaurants">
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-here">
-                                                <!--                      text goes here-->
-                                            </div>
+                    <!-- Content Row -->
+                <template id="restaurants">
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-here">
+                                            <!--                      text goes here-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </template>
-                    <div class="row" id="contains-restaurants"></div>
-                </div>
+                    </div>
+                </template>
+                <div class="row" id="contains-restaurants"></div>
 
                 <!--            &lt;!&ndash; Pending Requests Card Example &ndash;&gt;-->
                 <!--            <div class="col-xl-3 col-md-6 mb-4">-->
