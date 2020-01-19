@@ -49,30 +49,18 @@ function populateRestaurant() {
 function searchAll(){
     // Declare variables
     let input;
-    input = document.getElementById('indexInput');
-    // filter = input.value.toUpperCase();
-    // ul = document.getElementById("myUL");
-    // li = ul.getElementsByTagName('li');
-
-    // Loop through all list items, and hide those who don't match the search query
-    // for (i = 0; i < li.length; i++) {
-    //     a = li[i].getElementsByTagName("a")[0];
-    //     txtValue = a.textContent || a.innerText;
-    //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //         li[i].style.display = "";
-    //     } else {
-    //         li[i].style.display = "none";
-    //     }
-    // }
     $.ajax(settings).done(function (response) {
         console.log(response);
         let branches = response;
         let currentBranch, template, tbody, clone, tgt;
+        tgt = document.querySelector("#contains-restaurants");
+        tgt.innerHTML = "";
         for(let index = 0; index < branches.length; index++)
         {
             let list_entry = branches[index];
             // console.log(list_entry);
             // for (let branch in list_entry){
+            input = document.getElementById('indexInput').value;
             currentBranch = list_entry["restaurant_org"];
             // for (let branch in list_entry["restaurant_branches"]) {
 
@@ -85,13 +73,19 @@ function searchAll(){
 
             // Clone the new row and insert it into the table
             // tbody = document.querySelector("tbody");
-            clone = template.content.cloneNode(true);
-            tbody = clone.querySelector("div.text-here");
-            tbody.textContent = currentBranch;
-            // console.log(clone);
+            console.log(input);
+            // console.log(currentBranch);
+            if (currentBranch.includes(input)) {
+                console.log(currentBranch);
+                clone = template.content.cloneNode(true);
+                tbody = clone.querySelector("div.text-here");
+                tbody.textContent = currentBranch;
+                // console.log(clone);
 
-            tgt = document.querySelector("#contains-restaurants");
-            tgt.appendChild(clone);
+                // tgt = document.querySelector("#contains-restaurants");
+                // tgt.innerHTML = "";
+                tgt.appendChild(clone);
+            }
             // }
         }
     });

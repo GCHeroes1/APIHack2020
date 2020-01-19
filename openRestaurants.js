@@ -12,46 +12,39 @@ var settings = {
 };
 
 function populateOpen() {
-    // console.log("ran stuff");
-            $.ajax(settings).done(function (response) {
-            console.log(response);
-            let branches = response;
-            let restaurant;
-            let template;
-            let tbody;
-            let clone;
-            let tgt;
-            let branchLocation;
-            let openStatus;
-            for (let index = 0; index < branches.length; index++) {
-                let list_entry = branches[index];
-                // console.log(list_entry);
-                // for (let branch in list_entry){
-                restaurant = list_entry["restaurant_org"];
-                for (let branch in list_entry["restaurant_branches"]) {
+// console.log("ran stuff");
+        $.ajax(settings).done(function (response) {
+        console.log(response);
+        let branches = response;
+        let restaurant, template, tbody, clone, tgt, branchLocation, openStatus;
+        for (let index = 0; index < branches.length; index++) {
+            let list_entry = branches[index];
+            // console.log(list_entry);
+            // for (let branch in list_entry){
+            restaurant = list_entry["restaurant_org"];
+            for (let branch in list_entry["restaurant_branches"]) {
 
-                    //works for each branch name
-                    branchLocation = list_entry["restaurant_branches"][branch]['branch_name'];
-                    openStatus = list_entry["restaurant_branches"][branch]["status"];
-                    // console.log(openStatus);
+                //works for each branch name
+                branchLocation = list_entry["restaurant_branches"][branch]['branch_name'];
+                openStatus = list_entry["restaurant_branches"][branch]["status"];
+                // console.log(openStatus);
 
-                    // Instantiate the table with the existing HTML tbody
-                    // and the row with the template
-                    template = document.querySelector('#restaurants');
+                // Instantiate the table with the existing HTML tbody
+                // and the row with the template
+                template = document.querySelector('#restaurants');
 
-                    // Clone the new row and insert it into the table
-                    if (openStatus == "OPEN") {
-                        // tbody = document.querySelector("tbody");
-                        clone = template.content.cloneNode(true);
-                        tbody = clone.querySelector("div.text-here");
-                        tbody.textContent = restaurant + " - " + branchLocation;
-                        tgt = document.querySelector("#contains-restaurants");
-                        tgt.appendChild(clone);
-                    }
-                    // console.log(clone);
+                // Clone the new row and insert it into the table
+                if (openStatus == "OPEN") {
+                    // tbody = document.querySelector("tbody");
+                    clone = template.content.cloneNode(true);
+                    tbody = clone.querySelector("div.text-here");
+                    tbody.textContent = restaurant + " - " + branchLocation;
+                    tgt = document.querySelector("#contains-restaurants");
+                    tgt.appendChild(clone);
                 }
+                // console.log(clone);
             }
-        });
-
+        }
+    });
 }
 
