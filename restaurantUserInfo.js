@@ -1,6 +1,10 @@
 var cord = document.getElementById("Location");
 var d = new Date();
-var time = "<br>Time: "+ d.getHours() + ":" + d.getMinutes();
+var tempMin = (d.getMinutes()).toString();
+if (d.getMinutes() < 10){
+    tempMin = "0" + tempMin;
+}
+var time = "<br>Time: "+ d.getHours() + ":" + tempMin;
 var UserLat = 0;
 var UserLong = 0;
 function getLocation() {
