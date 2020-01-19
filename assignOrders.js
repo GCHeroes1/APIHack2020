@@ -34,6 +34,7 @@ var settingsOrders = {
     },
 };
 
+
 function acquireOrderID() {
     var orders = null;
     $.ajax(settingsOrders).done(function (response) {
@@ -49,6 +50,23 @@ function acquireOrderID() {
         // console.log(orders)
     }, this);
     // console.log(orders);
+    return orders;
+}
+
+function acquireOrderRestaurant() {
+    var orders = null;
+    $.ajax(settingsOrders).done(function (response) {
+        let restaurantID;
+        let order = response;
+        console.log(order);
+        orders = new Array(order.length);
+        for (let index = 0; index < order.length; index++) {
+            restaurantID = order[index]["restaurant_id"];
+            orders[index] = restaurantID;
+            // console.log(restaurantID);
+        }
+    }, this);
+    console.log(orders);
     return orders;
 }
 
