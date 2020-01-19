@@ -86,6 +86,32 @@ function acquireRestaurantLocation() {
     return restaurants;
 }
 
+function acquireRiderLocation() {
+    var riders = null;
+    $.ajax(settingsRiders).done(function (response) {
+        // let order = response;
+        // console.log(order);
+        let allRiders = response;
+        let riderIndex = 0;
+        // console.log(list_entry);
+        riders = new Array(allRiders.length*2);
+        let restaurantIndex = 0;
+        let ridersLat, ridersLong;
+        for (let index = 0; index < allRiders.length; index++) {
+            ridersLat = allRiders[index]["location"]["lat"];
+            ridersLong = allRiders[index]["location"]["long"];
+            console.log(ridersLat);
+            console.log(ridersLong);
+            riders[riderIndex] = ridersLat;
+            riders[riderIndex + 1] = ridersLong;
+            riderIndex++;
+            riderIndex++;
+        }
+    }, this);
+    console.log(riders);
+    return riders;
+}
+
 function distance(lat1, lon1, lat2, lon2) {
     if ((lat1 == lat2) && (lon1 == lon2)) {
         return 0;
