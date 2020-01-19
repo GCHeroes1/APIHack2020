@@ -35,11 +35,14 @@ function populateRestaurant() {
                 // Clone the new row and insert it into the table
                 // tbody = document.querySelector("tbody");
                 clone = template.content.cloneNode(true);
+                //need to get the dropdown here
                 tbody = clone.querySelector("div.text-here");
                 tbody.textContent = currentBranch;
+                //tbody = clone.querySelector("div.dropdown-divider"); this line doesn't workkkkkkkkk
                 // console.log(clone);
 
                 tgt = document.querySelector("#contains-restaurants");
+
                 tgt.appendChild(clone);
                 getLocation();
             // }
