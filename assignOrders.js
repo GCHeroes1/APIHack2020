@@ -34,13 +34,38 @@ var settingsOrders = {
     },
 };
 
-
+function calculateDistanceRiderRestaurant(){
+    let riderLocation = acquireRiderLocation();
+    let restaurantLocation = acquireRestaurantLocation();
+    for (let restaurantIndex = 0; restaurantIndex < (restaurantLocation.length-1); restaurantIndex++){
+        let minimumSoFar = 10000000;
+        let minimumArray = new Array((((riderLocation.length)/2) -1));
+        riderLocationIndex = 0;
+        for (let riderIndex = 0; riderIndex < (((riderLocation.length)/2)-1) ; riderIndex++){
+            lat1 = riderLocation[riderLocationIndex];
+            lon1 = riderLocation[riderLocationIndex+1];
+            lat2 = restaurantLocation[restaurantIndex];
+            lon2 = restaurantLocation[restaurantIndex+1];
+            minimumArray[riderIndex] = distance(lat1, lon1, lat2, lon2);
+            // if (minimumArray[riderIndex] < minimumSoFar){
+            //     minimumSoFar = minimumArray[riderIndex];
+            // }
+            riderLocationIndex++;
+            riderLocationIndex++;
+        }
+        console.log(minimumArray);
+        minimumSoFar = Math.min.apply(Math, minimumArray);
+        console.log(minimumSoFar);
+        // break;
+        // console.log(minimumSoFar);
+    }
+}
 function acquireOrderID() {
     var orders = null;
     $.ajax(settingsOrders).done(function (response) {
         let orderID;
         let order = response;
-        console.log(order);
+        // console.log(order);
         orders = new Array(order.length);
         for (let index = 0; index < order.length; index++) {
             orderID = order[index]["id"];
@@ -58,7 +83,7 @@ function acquireOrderRestaurant() {
     $.ajax(settingsOrders).done(function (response) {
         let restaurantID;
         let order = response;
-        console.log(order);
+        // console.log(order);
         orders = new Array(order.length);
         for (let index = 0; index < order.length; index++) {
             restaurantID = order[index]["restaurant_id"];
@@ -66,7 +91,7 @@ function acquireOrderRestaurant() {
             // console.log(restaurantID);
         }
     }, this);
-    console.log(orders);
+    // console.log(orders);
     return orders;
 }
 
@@ -91,8 +116,8 @@ function acquireRestaurantLocation() {
                 branchLocation = list_entry["restaurant_branches"][branch]['branch_name'];
                 branchLat = list_entry["restaurant_branches"][branch]["location"]["lat"];
                 branchLong = list_entry["restaurant_branches"][branch]["location"]["long"];
-                console.log(branchLat);
-                console.log(branchLong);
+                // console.log(branchLat);
+                // console.log(branchLong);
                 restaurants[restaurantIndex] = branchLat;
                 restaurants[restaurantIndex+1] = branchLong;
                 restaurantIndex++;
@@ -100,7 +125,7 @@ function acquireRestaurantLocation() {
             }
         }
     }, this);
-    console.log(restaurants);
+    // console.log(restaurants);
     return restaurants;
 }
 
@@ -118,15 +143,15 @@ function acquireRiderLocation() {
         for (let index = 0; index < allRiders.length; index++) {
             ridersLat = allRiders[index]["location"]["lat"];
             ridersLong = allRiders[index]["location"]["long"];
-            console.log(ridersLat);
-            console.log(ridersLong);
+            // console.log(ridersLat);
+            // console.log(ridersLong);
             riders[riderIndex] = ridersLat;
             riders[riderIndex + 1] = ridersLong;
             riderIndex++;
             riderIndex++;
         }
     }, this);
-    console.log(riders);
+    // console.log(riders);
     return riders;
 }
 
