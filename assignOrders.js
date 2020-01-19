@@ -40,7 +40,7 @@ function calculateDistanceRiderRestaurant(){
     for (let restaurantIndex = 0; restaurantIndex < (restaurantLocation.length-1); restaurantIndex++){
         let minimumSoFar = 10000000;
         let minimumArray = new Array((((riderLocation.length)/2) -1));
-        riderLocationIndex = 0;
+        let riderLocationIndex = 0;
         for (let riderIndex = 0; riderIndex < (((riderLocation.length)/2)-1) ; riderIndex++){
             lat1 = riderLocation[riderLocationIndex];
             lon1 = riderLocation[riderLocationIndex+1];
@@ -56,6 +56,7 @@ function calculateDistanceRiderRestaurant(){
         console.log(minimumArray);
         minimumSoFar = Math.min.apply(Math, minimumArray);
         console.log(minimumSoFar);
+        restaurantIndex++;
         // break;
         // console.log(minimumSoFar);
     }
