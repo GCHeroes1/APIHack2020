@@ -41,6 +41,7 @@ function populateRestaurant() {
 
                 tgt = document.querySelector("#contains-restaurants");
                 tgt.appendChild(clone);
+                getLocation();
             // }
         }
     });
@@ -89,4 +90,41 @@ function searchAll(){
             // }
         }
     });
+}
+
+var cord = document.getElementById("Location");
+function getLocation() {
+    if (navigator.geolocation) {
+        console.log("Your browser supports geolocation");
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+        cord.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    console.log("I get here");
+    console.log("Latitude: " + position.coords.latitude +
+        "\nLongitude: " + position.coords.longitude);
+    cord.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            cord.innerHTML = "User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            cord.innerHTML = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            cord.innerHTML = "The request to get user location timed out.";
+            break;
+        default:
+            cord.innerHTML = "An unknown error occurred.";
+            break;
+    }
 }
