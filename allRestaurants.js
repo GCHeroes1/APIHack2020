@@ -108,7 +108,7 @@ function getLocation() {
 function showPosition(position) {
     UserLat = position.coords.latitude;
     UserLong = position.coords.longitude;
-    /console.log("Latitude: " + UserLat +
+    //console.log("Latitude: " + UserLat +
      //   "\nLongitude: " + UserLong);
     cord.innerHTML = "Latitude: " + UserLat +
         "<br>Longitude: " + UserLong;
