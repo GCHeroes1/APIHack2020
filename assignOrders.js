@@ -38,9 +38,9 @@ function calculateDistanceRiderRestaurant(){
     let riderLocation = acquireRiderLocation();
     let restaurantLocation = acquireRestaurantLocation();
     let arrayIndexing = (riderLocation.length/3)-1;
-    // for (let restaurantIndex = 0; restaurantIndex < ((restaurantLocation.length/3)-1); restaurantIndex++){
+    for (let restaurantIndex = 0; restaurantIndex < ((restaurantLocation.length/3)-1); restaurantIndex+=3){
         let nameIndex, riderName, restaurantLocationIndex, lat1, lat2, lon1, lon2;
-        let restaurantIndex = 0;
+        // let restaurantIndex = 0;
         let minimumSoFar = 10000000;
         let minimumArray = new Array(arrayIndexing);
         let riderNames = new Array((riderLocation.length/3)-1);
@@ -70,10 +70,10 @@ function calculateDistanceRiderRestaurant(){
         console.log(minimumSoFar);
         console.log(riderName);
         console.log(restaurantLocation[(restaurantIndex*3)+2]);
-        restaurantLocationIndex+=3;
+        // restaurantLocationIndex+=3;
         // break;
         // console.log(minimumSoFar);
-    // }
+    }
 }
 function acquireOrderID() {
     var orders = null;
