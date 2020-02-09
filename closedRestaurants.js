@@ -6,7 +6,6 @@ var settings = {
     "method": "GET",
     "timeout": 0,
     "headers": {
-        "Access-Control-Allow-Origin": "localhost",
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
 };
