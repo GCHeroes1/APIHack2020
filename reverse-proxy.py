@@ -2,7 +2,7 @@ from flask import Flask,request,redirect,Response
 import requests
 
 app = Flask(__name__)
-SITE_NAME = 'https://roo-api-sandbox.deliveroo.net'
+SITE_NAME = 'http://localhost:8080'
 
 # @app.route('/')
 # def index():

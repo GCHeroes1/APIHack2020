@@ -1,6 +1,6 @@
 import requests
 import json
-url = "https://roo-api-sandbox.deliveroo.net/restaurants"
+url = "http://localhost:8080/restaurants"
 
 payload = {}
 headers = {
