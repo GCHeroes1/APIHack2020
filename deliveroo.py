@@ -4,7 +4,7 @@ url = "https://roo-api-sandbox.deliveroo.net/restaurants"
 
 payload = {}
 headers = {
-  'api-key': 'ab764166-02d3-4335-b8d7-d6e06d139c2f'
+  'api-key': '88303f66-0fc5-4b97-adab-490634908445'
 }
 
 response = requests.request("GET", url, headers=headers, data = payload)
