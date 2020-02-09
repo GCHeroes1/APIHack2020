@@ -2,11 +2,10 @@
 // for the presence of the template element's content attribute.
 
 var settings = {
-    "url": "https://roo-api-sandbox.deliveroo.net/restaurants",
+    "url": "http://localhost:8080/restaurants",
     "method": "GET",
     "timeout": 0,
     "headers": {
-        "Access-Control-Allow-Origin": "localhost",
         "api-key": "ab764166-02d3-4335-b8d7-d6e06d139c2f"
     },
 };
