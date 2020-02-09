@@ -33,12 +33,10 @@ var settingsOrders = {
 
 var riders = {};
 
-$.ajax(settingsRiders).done(function(response)
-{
+$.ajax(settingsRiders).done(function (response) {
     riders = {};
     let rider;
-    for(rider of response)
-    {
+    for (rider of response) {
         // console.log(rider);
 
         riders[rider.id] = rider;
@@ -46,150 +44,81 @@ $.ajax(settingsRiders).done(function(response)
     }
 });
 
-// console.log("HELLO I WANT THIS");
-// console.log(riders);
-
-
-function delegateOrders(){
-    var orders = null;
-    let whatrestaurantidisthisorder = {};
-    $.ajax(settingsOrders).done(function (response) {
-        let orderID, restaurantID, ordersIndex;
-        let order = response;
-        // console.log(order);
-        orders = new Array(order.length*2);
-        ordersIndex = 0;
-        for (let index = 0; index < order.length; index++) {
-            orderID = order[index]["id"];
-            restaurantID = order[index]["restaurant_id"];
-            orders[ordersIndex] = orderID;
-            orders[ordersIndex+1] = restaurantID;
-            ordersIndex+=2;
-            whatrestaurantidisthisorder[orderID] = restaurantID;
-            // console.log(orderID);
-        }
-        // console.log(orders)
-    }, this);
-    // console.log(orders);
-    // console.log(whatrestaurantidisthisorder);
-    // for (let orderArrayIndex = 0; orderArrayIndex < ((orders.length/2)-1); orderArrayIndex+=2){
-        calculateDistanceRiderRestaurant(orders[0+1]);
-    // }
-    // return orders;
-}
-
-function calculateDistanceRiderRestaurant(restaurantID){
-    let restaurantLocation = acquireRestaurantLocation();
-    // let arrayIndexing = (riderLocation.length/3)-1;
-    // for (let restaurantIndex = 0; restaurantIndex < ((restaurantLocation.length/3)-1); restaurantIndex+=3){
-        let nameIndex, riderName, restaurantLocationIndex, lat1, lat2, lon1, lon2;
-        // let restaurantIndex = 0;
-        let minimumSoFar = 10000000;
-        let minimumArray = [];
-        // let riderNames = new Array((riderLocation.length/3)-1);
-        let riderLocationIndex = 0;
-        let riderId;
-        for (riderId in riders){
-            [lat1, lon1] = acquireRiderLocation(riderId);
-            console.log(lat1, lon1);
-            lat2 = restaurantLocation[restaurantID];
-            lon2 = restaurantLocation[restaurantID+1];
-            // lat2 = restaurantLocation[restaurantIndex];
-            // lon2 = restaurantLocation[restaurantIndex+1];
-
-
-
-            minimumArray.push(distance(lat1, lon1, lat2, lon2));
-
-
-
-            // riderNames[riderIndex] = riderLocation[riderLocationIndex+2];
-            // if (minimumArray[riderIndex] < minimumSoFar){
-            //     minimumSoFar = minimumArray[riderIndex];
-            // }
-            // if (minimumArray[riderIndex] == 0){
-                // console.log (lat1);
-                // console.log (lat2);
-                // console.log (lon1);
-                // console.log (lon2);
-            // }
-            // riderLocationIndex+=3;
-        }
-        console.log(minimumArray);
-        minimumSoFar = Math.min.apply(Math, minimumArray);
-        nameIndex = minimumArray.indexOf(minimumSoFar);
-        // riderName = riderNames[nameIndex];
-        // console.log(minimumSoFar);
-        // console.log(riderName);
-        // console.log(restaurantLocation[(restaurantID*3)+2]);
-        // console.log(restaurantLocation[(restaurantIndex*3)+2]);
-        // restaurantLocationIndex+=3;
-        // break;
-        // console.log(minimumSoFar);
-    // }
-}
-function acquireOrderID() {
-    var orders = null;
-    $.ajax(settingsOrders).done(function (response) {
-        let orderID;
-        let order = response;
-        // console.log(order);
-        orders = new Array(order.length);
-        for (let index = 0; index < order.length; index++) {
-            orderID = order[index]["id"];
-            orders[index] = orderID;
-            // console.log(orderID);
-        }
-        // console.log(orders)
-    }, this);
-    // console.log(orders);
-    return orders;
-}
-
-function acquireOrderRestaurant() {
-    var orders = null;
-    $.ajax(settingsOrders).done(function (response) {
-        let restaurantID;
-        let order = response;
-        // console.log(order);
-        orders = new Array(order.length);
-        for (let index = 0; index < order.length; index++) {
-            restaurantID = order[index]["restaurant_id"];
-            orders[index] = restaurantID;
-            // console.log(restaurantID);
-        }
-    }, this);
-    // console.log(orders);
-    return orders;
-}
-
-function acquireRestaurantLocation() {
-    var restaurants = null;
-    $.ajax(settingsRestaurants).done(function (response) {
-        let branches = response;
-        restaurants = new Array(branches.length*3);
-        let restaurantIndex = 0;
-        let restaurant, branchLocation, branchLat, branchLong, branchName;
-        for (let index = 0; index < branches.length; index++) {
-            let list_entry = branches[index];
-            // openStatus = list_entry["restaurant_branches"][branch]["status"];
-            // for (let branch in list_entry){
-            restaurant = list_entry["restaurant_org"];
-            for (let branch in list_entry["restaurant_branches"]) {
-                //works for each branch name
-                branchLocation = list_entry["restaurant_branches"][branch]['branch_name'];
-                branchLat = list_entry["restaurant_branches"][branch]["location"]["lat"];
-                branchLong = list_entry["restaurant_branches"][branch]["location"]["long"];
-                branchName = list_entry["restaurant_branches"][branch]["branch_name"] + " - " + restaurant;
-                restaurants[restaurantIndex] = branchLat;
-                restaurants[restaurantIndex+1] = branchLong;
-                restaurants[restaurantIndex+2] = branchName;
-                restaurantIndex+=3;
+var restaurants = {};
+$.ajax(settingsRestaurants).done(function (response) {
+    restaurants = {};
+    let org, restaurant;
+    for (org of response) {
+        for (restaurant in org["restaurant_branches"]) {
+            if (org["restaurant_branches"].hasOwnProperty(restaurant)) {
+                restaurants[restaurant] = org["restaurant_branches"][restaurant];
             }
         }
+    }
+});
+
+function delegateOrders() {
+    var orders = null;
+    let whatrestaurantidisthisorder = {};
+    let orderID;
+    $.ajax(settingsOrders).done(function (response) {
+        let restaurantID, ordersIndex;
+        let order = response;
+        orders = new Array(order.length * 2);
+        for (let index = 0; index < order.length; index++) {
+            orderID = order[index]["id"];
+            restaurantID = order[index]["restaurant_id"];
+            whatrestaurantidisthisorder[orderID] = restaurantID;
+        }
     }, this);
-    // console.log(restaurants);
-    return restaurants;
+    let anOrder, template, tbody, clone, tgt;
+    template = document.querySelector('#orders');
+
+    for (anOrder in whatrestaurantidisthisorder){
+        [riderId, minDistance] = assignNearestRider(whatrestaurantidisthisorder[anOrder]);
+
+        clone = template.content.cloneNode(true);
+        tbody = clone.querySelector("div.text-here");
+        if (minDistance >= 0)
+        {
+        tbody.textContent = "ORDER #" + anOrder + " is assigned to RIDER #" + riderId + " who is " + minDistance + " km away";
+        }
+        else
+        {
+            tbody.textContent = "ORDER #" + anOrder + " is waiting for a rider to become available.";
+        }
+        tgt = document.querySelector("#contains-restaurants");
+        tgt.appendChild(clone);
+    }
+}
+
+
+function assignNearestRider(restaurantID) {
+    let tgtRider, lat1, lat2, lon1, lon2;
+    let minDistance = -1;
+    let riderId;
+    for (riderId in riders) {
+        [lat1, lon1] = acquireRiderLocation(riderId);
+        [lat2, lon2] = acquireRestaurantLocation(restaurantID);
+
+        let tempDist = distance(lat1, lon1, lat2, lon2);
+        if (tempDist < minDistance || minDistance < 0) {
+            tgtRider = riderId;
+            minDistance = tempDist;
+        }
+    }
+    console.log(tgtRider);
+    console.log(minDistance);
+    delete riders[riderId];
+    return [tgtRider, minDistance];
+}
+
+
+function acquireRestaurantLocation(restaurantID) {
+    let lat, long;
+    lat = restaurants[restaurantID]["location"]["lat"];
+    long = restaurants[restaurantID]["location"]["long"];
+    return [lat, long];
 }
 
 function acquireRiderLocation(riderId) {
@@ -199,103 +128,20 @@ function acquireRiderLocation(riderId) {
     return [lat, long];
 }
 
-function distance(lat1, lon1, lat2, lon2) {
-    if ((lat1 == lat2) && (lon1 == lon2)) {
-        return 0;
-    }
-    else {
-        var radlat1 = Math.PI * lat1/180;
-        var radlat2 = Math.PI * lat2/180;
-        var theta = lon1-lon2;
-        var radtheta = Math.PI * theta/180;
-        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        if (dist > 1) {
-            dist = 1;
-        }
-        dist = Math.acos(dist);
-        dist = dist * 180/Math.PI;
-        dist = dist * 60 * 1.1515;
-        dist = dist * 1.609344
-        return dist;
-    }
+function distance(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1);
+    var a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;  // Distance in km
 }
 
-function populateRestaurant() {
-    // console.log("ran stuff");
-        $.ajax(settings).done(function (response) {
-        console.log(response);
-        let branches = response;
-        let currentBranch, template, tbody, clone, tgt;
-        for(let index = 0; index < branches.length; index++)
-        {
-            let list_entry = branches[index];
-            // console.log(list_entry);
-            // for (let branch in list_entry){
-                currentBranch = list_entry["restaurant_org"];
-            // for (let branch in list_entry["restaurant_branches"]) {
-
-                //works for each branch name
-                // currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
-
-                // Instantiate the table with the existing HTML tbody
-                // and the row with the template
-                template = document.querySelector('#restaurants');
-
-                // Clone the new row and insert it into the table
-                // tbody = document.querySelector("tbody");
-                clone = template.content.cloneNode(true);
-                tbody = clone.querySelector("div.text-here");
-                tbody.textContent = currentBranch;
-                // console.log(clone);
-
-                tgt = document.querySelector("#contains-restaurants");
-                tgt.appendChild(clone);
-            // }
-        }
-    });
+function deg2rad(deg) {
+    return deg * (Math.PI/180)
 }
 
-function searchAll(){
-    // Declare variables
-    let input;
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        let branches = response;
-        let currentBranch, template, tbody, clone, tgt;
-        tgt = document.querySelector("#contains-restaurants");
-        tgt.innerHTML = "";
-        for(let index = 0; index < branches.length; index++)
-        {
-            let list_entry = branches[index];
-            // console.log(list_entry);
-            // for (let branch in list_entry){
-            input = document.getElementById('indexInput').value;
-            currentBranch = list_entry["restaurant_org"];
-            // for (let branch in list_entry["restaurant_branches"]) {
-
-            //works for each branch name
-            // currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
-
-            // Instantiate the table with the existing HTML tbody
-            // and the row with the template
-            template = document.querySelector('#restaurants');
-
-            // Clone the new row and insert it into the table
-            // tbody = document.querySelector("tbody");
-            console.log(input);
-            // console.log(currentBranch);
-            if (currentBranch.includes(input)) {
-                console.log(currentBranch);
-                clone = template.content.cloneNode(true);
-                tbody = clone.querySelector("div.text-here");
-                tbody.textContent = currentBranch;
-                // console.log(clone);
-
-                // tgt = document.querySelector("#contains-restaurants");
-                // tgt.innerHTML = "";
-                tgt.appendChild(clone);
-            }
-            // }
-        }
-    });
-}
