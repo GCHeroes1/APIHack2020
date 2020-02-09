@@ -37,11 +37,13 @@ var settingsOrders = {
 function calculateDistanceRiderRestaurant(){
     let riderLocation = acquireRiderLocation();
     let restaurantLocation = acquireRestaurantLocation();
-    let arrayIndexing = (riderLocation.length/2)-1;
-    // for (let restaurantIndex = 0; restaurantIndex < (restaurantLocation.length-1); restaurantIndex++){
+    let arrayIndexing = (riderLocation.length/3)-1;
+    // for (let restaurantIndex = 0; restaurantIndex < ((restaurantLocation.length/3)-1); restaurantIndex++){
+        let nameIndex, riderName, restaurantLocationIndex, lat1, lat2, lon1, lon2;
         let restaurantIndex = 0;
         let minimumSoFar = 10000000;
         let minimumArray = new Array(arrayIndexing);
+        let riderNames = new Array((riderLocation.length/3)-1);
         let riderLocationIndex = 0;
         for (let riderIndex = 0; riderIndex < arrayIndexing ; riderIndex++){
             lat1 = riderLocation[riderLocationIndex];
@@ -49,21 +51,26 @@ function calculateDistanceRiderRestaurant(){
             lat2 = restaurantLocation[restaurantIndex];
             lon2 = restaurantLocation[restaurantIndex+1];
             minimumArray[riderIndex] = distance(lat1, lon1, lat2, lon2);
+            riderNames[riderIndex] = riderLocation[riderLocationIndex+2];
             // if (minimumArray[riderIndex] < minimumSoFar){
             //     minimumSoFar = minimumArray[riderIndex];
             // }
             if (minimumArray[riderIndex] == 0){
-                console.log (lat1);
-                console.log (lat2);
-                console.log (lon1);
-                console.log (lon2);
+                // console.log (lat1);
+                // console.log (lat2);
+                // console.log (lon1);
+                // console.log (lon2);
             }
-            riderLocationIndex+=2;
+            riderLocationIndex+=3;
         }
         console.log(minimumArray);
         minimumSoFar = Math.min.apply(Math, minimumArray);
+        nameIndex = minimumArray.indexOf(minimumSoFar);
+        riderName = riderNames[nameIndex];
         console.log(minimumSoFar);
-        restaurantIndex+=2;
+        console.log(riderName);
+        console.log(restaurantLocation[(restaurantIndex*3)+2]);
+        restaurantLocationIndex+=3;
         // break;
         // console.log(minimumSoFar);
     // }
@@ -107,9 +114,9 @@ function acquireRestaurantLocation() {
     var restaurants = null;
     $.ajax(settingsRestaurants).done(function (response) {
         let branches = response;
-        restaurants = new Array(branches.length*2);
+        restaurants = new Array(branches.length*3);
         let restaurantIndex = 0;
-        let restaurant, branchLocation, branchLat, branchLong;
+        let restaurant, branchLocation, branchLat, branchLong, branchName;
         for (let index = 0; index < branches.length; index++) {
             let list_entry = branches[index];
             // openStatus = list_entry["restaurant_branches"][branch]["status"];
@@ -120,9 +127,11 @@ function acquireRestaurantLocation() {
                 branchLocation = list_entry["restaurant_branches"][branch]['branch_name'];
                 branchLat = list_entry["restaurant_branches"][branch]["location"]["lat"];
                 branchLong = list_entry["restaurant_branches"][branch]["location"]["long"];
+                branchName = list_entry["restaurant_branches"][branch]["branch_name"] + " - " + restaurant;
                 restaurants[restaurantIndex] = branchLat;
                 restaurants[restaurantIndex+1] = branchLong;
-                restaurantIndex+=2;
+                restaurants[restaurantIndex+2] = branchName;
+                restaurantIndex+=3;
             }
         }
     }, this);
@@ -135,16 +144,16 @@ function acquireRiderLocation() {
     $.ajax(settingsRiders).done(function (response) {
         let allRiders = response;
         let riderIndex = 0;
-        riders = new Array(allRiders.length*2);
-        let ridersLat, ridersLong;
+        riders = new Array(allRiders.length*3);
+        let ridersLat, ridersLong, ridersName;
         for (let index = 0; index < allRiders.length; index++) {
             ridersLat = allRiders[index]["location"]["lat"];
             ridersLong = allRiders[index]["location"]["long"];
-            // ridersName = allRiders[index]["name"];
+            ridersName = allRiders[index]["name"];
             riders[riderIndex] = ridersLat;
             riders[riderIndex + 1] = ridersLong;
-            riderIndex++;
-            riderIndex++;
+            riders[riderIndex + 2] = ridersName;
+            riderIndex+=3;
         }
     }, this);
     // console.log(riders);
