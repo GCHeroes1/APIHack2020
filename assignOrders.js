@@ -7,7 +7,6 @@ var settingsRestaurants = {
     "async": false,
     "timeout": 0,
     "headers": {
-        "Access-Control-Allow-Origin": "localhost",
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
 };
@@ -18,7 +17,6 @@ var settingsRiders = {
     "async": false,
     "timeout": 0,
     "headers": {
-        "Access-Control-Allow-Origin": "localhost",
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
 };
@@ -29,7 +27,6 @@ var settingsOrders = {
     "async": false,
     "timeout": 0,
     "headers": {
-        "Access-Control-Allow-Origin": "localhost",
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
 };
