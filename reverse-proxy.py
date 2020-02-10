@@ -2,7 +2,7 @@ from flask import Flask,request,redirect,Response
 import requests
 
 app = Flask(__name__)
-SITE_NAME = 'http://localhost:8080'
+SITE_NAME = 'https://roo-api-sandbox.deliveroo.net'
 
 # @app.route('/')
 # def index():
@@ -12,7 +12,7 @@ SITE_NAME = 'http://localhost:8080'
 def proxy(path):
     global SITE_NAME
     print(request.method)
-    print(request.headers.get("api-key"))
+#    print(request.headers.get("api-key"))
 #     print("fucked")
     if request.method=='GET':
         resp = requests.get(f'{SITE_NAME}/{path}', headers={"api-key": request.headers.get("api-key")})

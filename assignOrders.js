@@ -5,30 +5,78 @@ var settingsRestaurants = {
     "url": "http://localhost:8080/restaurants",
     "method": "GET",
     "async": false,
-    "timeout": 0,
+    "timeout": 1000,
     "headers": {
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
+    error : function(xhr, textStatus, errorThrown ) {
+        if (textStatus == 'timeout') {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+                //try again
+                $.ajax(this);
+                return;
+            }
+            return;
+        }
+        if (xhr.status == 500) {
+            //handle error
+        } else {
+            //handle error
+        }
+    }
 };
 
 var settingsRiders = {
     "url": "http://localhost:8080/riders",
     "method": "GET",
     "async": false,
-    "timeout": 0,
+    "timeout": 1000,
     "headers": {
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
+    error : function(xhr, textStatus, errorThrown ) {
+        if (textStatus == 'timeout') {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+                //try again
+                $.ajax(this);
+                return;
+            }
+            return;
+        }
+        if (xhr.status == 500) {
+            //handle error
+        } else {
+            //handle error
+        }
+    }
 };
 
 var settingsOrders = {
     "url": "http://localhost:8080/orders",
     "method": "GET",
     "async": false,
-    "timeout": 0,
+    "timeout": 1000,
     "headers": {
         "api-key": "88303f66-0fc5-4b97-adab-490634908445"
     },
+    error : function(xhr, textStatus, errorThrown ) {
+        if (textStatus == 'timeout') {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+                //try again
+                $.ajax(this);
+                return;
+            }
+            return;
+        }
+        if (xhr.status == 500) {
+            //handle error
+        } else {
+            //handle error
+        }
+    }
 };
 
 var riders = {};
@@ -103,6 +151,12 @@ function assignNearestRider(restaurantID) {
             tgtRider = riderId;
             minDistance = tempDist;
         }
+        console.log("BOOMER");
+        console.log(lat1);
+        console.log(lon1);
+        console.log(lat2);
+        console.log(lon2);
+        console.log(minDistance);
     }
     console.log(tgtRider);
     console.log(minDistance);
