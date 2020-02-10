@@ -13,7 +13,7 @@ def proxy(path):
     global SITE_NAME
     print(request.method)
     print(request.headers.get("api-key"))
-    print("fucked")
+#     print("fucked")
     if request.method=='GET':
         resp = requests.get(f'{SITE_NAME}/{path}', headers={"api-key": request.headers.get("api-key")})
         excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
@@ -35,9 +35,9 @@ def proxy(path):
         response = Response(resp, resp.status_code)
         return response
     elif request.method=='OPTIONS':
-        print("in the right method")
+#         print("in the right method")
         resp = requests.options(url=f'{SITE_NAME}/{path}')
-        print("got the response: ", resp.content.decode())
+#         print("got the response: ", resp.content.decode())
         excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
         headers = [(name, value) for (name, value) in  resp.raw.headers.items() if name.lower() not in excluded_headers]
         headers.append(('Access-Control-Allow-Origin', '*'))

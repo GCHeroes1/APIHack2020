@@ -32,13 +32,10 @@ var settingsOrders = {
 };
 
 var riders = {};
-
 $.ajax(settingsRiders).done(function (response) {
     riders = {};
     let rider;
     for (rider of response) {
-        // console.log(rider);
-
         riders[rider.id] = rider;
         delete riders[rider.id]["id"];
     }
@@ -73,19 +70,19 @@ function delegateOrders() {
     }, this);
     let anOrder, template, tbody, clone, tgt;
     template = document.querySelector('#orders');
-
-    for (anOrder in whatrestaurantidisthisorder){
+    let cardBody;
+    for (anOrder in whatrestaurantidisthisorder) {
         [riderId, minDistance] = assignNearestRider(whatrestaurantidisthisorder[anOrder]);
 
         clone = template.content.cloneNode(true);
         tbody = clone.querySelector("div.text-here");
-        if (minDistance >= 0)
-        {
-        tbody.textContent = "ORDER #" + anOrder + " is assigned to RIDER #" + riderId + " who is " + minDistance + " km away";
-        }
-        else
-        {
+        if (minDistance >= 0) {
+            tbody.textContent = "ORDER #" + anOrder + " is assigned to RIDER #" + riderId + " who is " + minDistance + " km away";
+        } else {
             tbody.textContent = "ORDER #" + anOrder + " is waiting for a rider to become available.";
+            cardBody = clone.querySelector("div.border-left-primary");
+            cardBody.classList.remove("border-left-primary");
+            cardBody.classList.add("border-left-warning");
         }
         tgt = document.querySelector("#contains-restaurants");
         tgt.appendChild(clone);
@@ -109,7 +106,7 @@ function assignNearestRider(restaurantID) {
     }
     console.log(tgtRider);
     console.log(minDistance);
-    delete riders[riderId];
+    delete riders[tgtRider];
     return [tgtRider, minDistance];
 }
 
@@ -138,7 +135,7 @@ function distance(lat1,lon1,lat2,lon2) {
         Math.sin(dLon/2) * Math.sin(dLon/2)
     ;
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;  // Distance in km
+    return (Math.round(R * c * 100) / 100);  // Distance in km
 }
 
 function deg2rad(deg) {
