@@ -18,8 +18,8 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    UserLat = position.coords.latitude;
-    UserLong = position.coords.longitude;
+    UserLat = (Math.round(position.coords.latitude*100)/100);
+    UserLong = (Math.round(position.coords.longitude*100)/100);
     //console.log("Latitude: " + UserLat +
     //   "\nLongitude: " + UserLong);
     cord.innerHTML = "Latitude: " + UserLat +

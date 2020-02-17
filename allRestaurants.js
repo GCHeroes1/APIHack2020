@@ -1,12 +1,24 @@
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
 
+var settingsToken = {
+    "url": "http://localhost:8080/token",
+    "method": "GET",
+    "async": false,
+    "timeout": 1000
+};
+
+var token = null;
+$.ajax(settingsToken).done(function (response) {
+    token = response;
+});
+
 var settings = {
     "url": "http://localhost:8080/restaurants",
     "method": "GET",
     "timeout": 0,
     "headers": {
-        "api-key": "88303f66-0fc5-4b97-adab-490634908445"
+        "api-key": token["token"]
     },
 };
 
@@ -20,8 +32,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {//this gets the dist
         Math.sin(dLon/2) * Math.sin(dLon/2)
     ;
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c; // Distance in km
-    return d;
+    return (Math.round(R * c * 100) / 100);  // Distance in km
 }
 
 function deg2rad(deg) {

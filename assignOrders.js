@@ -1,13 +1,27 @@
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
 
+var settingsToken = {
+    "url": "http://localhost:8080/token",
+    "method": "GET",
+    "async": false,
+    "timeout": 1000
+};
+
+var token = null;
+$.ajax(settingsToken).done(function (response) {
+    token = response;
+});
+
+// console.log(token["token"]);
+
 var settingsRestaurants = {
     "url": "http://localhost:8080/restaurants",
     "method": "GET",
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": "88303f66-0fc5-4b97-adab-490634908445"
+        "api-key": token["token"]
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {
@@ -33,7 +47,7 @@ var settingsRiders = {
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": "88303f66-0fc5-4b97-adab-490634908445"
+        "api-key": token["token"]
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {
@@ -59,7 +73,7 @@ var settingsOrders = {
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": "88303f66-0fc5-4b97-adab-490634908445"
+        "api-key": token["token"]
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {
