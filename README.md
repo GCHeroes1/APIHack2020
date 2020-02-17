@@ -1,4 +1,17 @@
-Bootstrap website with the dashboard displaying all restaurants, dropdown for open, closed and orders. Open shows all open branches, closed shows all closed branches, each can be searched with the search bar referencing the restaurant name, live search result updates. Orders contains a list of orders and the riders that are assigned to them, only 1 rider per order. Able to collect location information from user, display time, working on implementation of additional features such as distance of rider from user, number of riders nearby user, average food prep time (based off of multiple orders in single restaurant branch leading to higher wait time), position in queue (number of orders at restaurant branch), time for food to reach user (average food prep time + current time). able to display distance of closest branch to user for all restaurants.  
+Bootstrap website with the dashboard displaying all restaurants \
+Dropdown for open, closed and orders. \
+Open shows all open branches \
+Closed shows all closed branches \
+Each can be searched with the search bar referencing the restaurant name, live search result updates. \
+Orders contains a list of orders and the riders that are assigned to them, only 1 rider per order. \
+Able to collect location information from user, display time \
+Able to display distance of closest branch to user for all restaurants \
+Working on implementation of additional features such as 
+- Distance of rider from user 
+- Number of riders nearby user 
+- Average food prep time (based off of multiple orders in single restaurant branch leading to higher wait time)
+- Position in queue (number of orders at restaurant branch) 
+- Time for food to reach user (average food prep time + current time)   
 
 ## Running the reverse proxy:
 Create a virtual environment, activate it and install requirements (platform dependent)
