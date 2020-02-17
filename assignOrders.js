@@ -10,7 +10,7 @@ var settingsToken = {
 
 var token = null;
 $.ajax(settingsToken).done(function (response) {
-    token = response;
+    token = response["token"];
 });
 
 // console.log(token["token"]);
@@ -21,7 +21,7 @@ var settingsRestaurants = {
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": token["token"]
+        "api-key": token
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {
@@ -47,7 +47,7 @@ var settingsRiders = {
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": token["token"]
+        "api-key": token
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {
@@ -73,7 +73,7 @@ var settingsOrders = {
     "async": false,
     "timeout": 1000,
     "headers": {
-        "api-key": token["token"]
+        "api-key": token
     },
     error : function(xhr, textStatus, errorThrown ) {
         if (textStatus == 'timeout') {

@@ -10,7 +10,7 @@ var settingsToken = {
 
 var token = null;
 $.ajax(settingsToken).done(function (response) {
-    token = response;
+    token = response["token"];
 });
 
 var settings = {
@@ -18,8 +18,7 @@ var settings = {
     "method": "GET",
     "timeout": 0,
     "headers": {
-        // "Access-Control-Allow-Origin": "localhost",
-        "api-key": token["token"]
+        "api-key": token
     },
 };
 
