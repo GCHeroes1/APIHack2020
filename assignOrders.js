@@ -165,15 +165,15 @@ function assignNearestRider(restaurantID) {
             tgtRider = riderId;
             minDistance = tempDist;
         }
-        console.log("BOOMER");
-        console.log(lat1);
-        console.log(lon1);
-        console.log(lat2);
-        console.log(lon2);
-        console.log(minDistance);
+        // console.log("BOOMER");
+        // console.log(lat1);
+        // console.log(lon1);
+        // console.log(lat2);
+        // console.log(lon2);
+        // console.log(minDistance);
     }
-    console.log(tgtRider);
-    console.log(minDistance);
+    // console.log(tgtRider);
+    // console.log(minDistance);
     delete riders[tgtRider];
     return [tgtRider, minDistance];
 }

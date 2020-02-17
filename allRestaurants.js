@@ -54,42 +54,43 @@ function populateRestaurant() {
                 currentBranch = list_entry["restaurant_org"];
             // for (let branch in list_entry["restaurant_branches"]) {
 
-                //works for each branch name
-                // currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
+            //works for each branch name
+            // currentBranch = list_entry["restaurant_branches"][branch]['branch_name'];
 
-                // Instantiate the table with the existing HTML tbody
-                // and the row with the template
+            // Instantiate the table with the existing HTML tbody
+            // and the row with the template
 
-                distanceFromUser = 40000; //order of length of equator: nothing can be as large as this distance
-                closestBranch = 0;
-                currentBranch = list_entry["restaurant_org"];
+            distanceFromUser = 40000; //order of length of equator: nothing can be as large as this distance
+            closestBranch = 0;
+            currentBranch = list_entry["restaurant_org"];
 
-                //console.log(Object.keys(list_entry["restaurant_branches"]).length);
-                for (let i = start; i < Object.keys(list_entry["restaurant_branches"]).length; i++){
-                    lat = parseFloat((list_entry["restaurant_branches"][i.toString()]["location"]["lat"]));
-                    long = parseFloat((list_entry["restaurant_branches"][i.toString()]["location"]["long"]));
-                    console.log(getDistanceFromLatLonInKm(lat,long,UserLat,UserLong));
-                    if (getDistanceFromLatLonInKm(lat,long,UserLat,UserLong) < distanceFromUser){
-                        distanceFromUser = getDistanceFromLatLonInKm(lat,long,UserLat,UserLong);
-                        closestBranch = i;
-                    }
+            //console.log(Object.keys(list_entry["restaurant_branches"]).length);
+            for (let i = start; i < (start + Object.keys(list_entry["restaurant_branches"]).length-1); i++){
+                lat = parseFloat((list_entry["restaurant_branches"][i.toString()]["location"]["lat"]));
+                long = parseFloat((list_entry["restaurant_branches"][i.toString()]["location"]["long"]));
+                console.log(getDistanceFromLatLonInKm(lat,long,UserLat,UserLong));
+                if (getDistanceFromLatLonInKm(lat,long,UserLat,UserLong) < distanceFromUser){
+                    distanceFromUser = getDistanceFromLatLonInKm(lat,long,UserLat,UserLong);
+                    closestBranch = i;
                 }
-                start += Object.keys(list_entry["restaurant_branches"]).length + 1;
-                console.log(start);
-                template = document.querySelector('#restaurants');
+            }
+            start += Object.keys(list_entry["restaurant_branches"]).length + 1;
+            // console.log(start);
+            // console.log("printed start");
+            template = document.querySelector('#restaurants');
 
-                // Clone the new row and insert it into the table
-                // tbody = document.querySelector("tbody");
-                clone = template.content.cloneNode(true);
-                //need to get the dropdown here
-                tbody = clone.querySelector("div.text-here");
-                tbody.textContent = currentBranch;
-                tdist = clone.querySelector("div.Distance-from-you");
-                tdist.textContent = distanceFromUser + "km away";
-                // console.log(clone);
+            // Clone the new row and insert it into the table
+            // tbody = document.querySelector("tbody");
+            clone = template.content.cloneNode(true);
+            //need to get the dropdown here
+            tbody = clone.querySelector("div.text-here");
+            tbody.textContent = currentBranch;
+            tdist = clone.querySelector("div.Distance-from-you");
+            tdist.textContent = distanceFromUser + "km away";
+            // console.log(clone);
 
-                tgt = document.querySelector("#contains-restaurants");
-                tgt.appendChild(clone);
+            tgt = document.querySelector("#contains-restaurants");
+            tgt.appendChild(clone);
             // }
         }
     });
