@@ -16,7 +16,7 @@ Working on implementation of additional features such as
 ## Running the reverse proxy:
 Create a virtual environment, activate it and install requirements (platform dependent)
  - Linux: \
-  `sudo apt install python3-venv`
+  `sudo apt install python3-venv` \
   `python3 -m venv venv` \
   `source venv/bin/activate` \
   `python -m pip install -r requirements.txt`
